@@ -72,19 +72,24 @@ sealed class Expression {
             PLUS -> {
                 left.calculate(x) + right.calculate(x)
             }
+
             MINUS -> {
                 left.calculate(x) - right.calculate(x)
             }
+
             TIMES -> {
                 left.calculate(x) * right.calculate(x)
             }
+
             DIV -> {
                 left.calculate(x) / right.calculate(x)
             }
+
             POW -> {
                 TODO()
             }
         }
+
         is Negate -> -arg.calculate(x)
     }
 }
@@ -107,6 +112,7 @@ class Parser(private val groups: List<String>) {
                     val right = parseItem()
                     left = Expression.Binary(left, op, right)
                 }
+
                 else -> return left
             }
         }
@@ -122,6 +128,7 @@ class Parser(private val groups: List<String>) {
                     val right = parseFactor()
                     left = Expression.Binary(left, op, right)
                 }
+
                 else -> return left
             }
         }
@@ -139,6 +146,7 @@ class Parser(private val groups: List<String>) {
                 if (next == ")") arg
                 else throw IllegalStateException(") expected instead of $next")
             }
+
             else -> Expression.Constant(group.toInt())
         }
     }
