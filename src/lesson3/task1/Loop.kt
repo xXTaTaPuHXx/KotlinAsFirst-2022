@@ -73,7 +73,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var newn = n
+    while (n > 0) {
+        newn /= 10
+        count++
+    }
+    return count
+}
 
 /**
  * Простая (2 балла)
@@ -139,7 +147,7 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = numberRevert(n)
+fun revert(n: Int): Int = TODO()
 
 /**
  * Средняя (3 балла)
