@@ -85,7 +85,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
  */
 
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double =
-    (deg / (1 * 180 / PI)) + (min / (60 * 180 / PI)) + (sec / (60 * 60 * 180 / PI))
+    (deg + min / 60.0 + sec / 3600.0) / 180.0 * PI
 
 /**
  * Тривиальная (1 балл)
@@ -110,10 +110,8 @@ fun thirdDigit(number: Int): Int = (number % 1000) / 100
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    if (hoursDepart > hoursArrive) return (hoursDepart * 60 + minutesDepart - hoursArrive * 60 - minutesArrive)
-    else return (hoursArrive * 60 + minutesArrive - hoursDepart * 60 - minutesDepart)
-}
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
+    hoursArrive * 60 + minutesArrive - hoursDepart * 60 - minutesDepart
 
 /**
  * Простая (2 балла)
