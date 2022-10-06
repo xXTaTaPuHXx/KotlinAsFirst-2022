@@ -84,7 +84,7 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val minside = minOf(a, b, c)
     val middleside = a + b + c - minside - maxOf(a, b, c)
     return when {
-        (middleside * minside <= r * s) && (middleside <= r or s) && (minside <= r or s) -> true
+        middleside <= r && minside <= s || minside <= r && middleside <= s -> true
         else -> false
     }
 }
