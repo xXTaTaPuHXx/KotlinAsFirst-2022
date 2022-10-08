@@ -131,7 +131,6 @@ class Tests {
         assertEquals(111, collatzSteps(1000))
         assertEquals(128, collatzSteps(100000))
     }
-
     @Test
     @Tag("3")
     fun lcm() {
