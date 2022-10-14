@@ -120,7 +120,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = sqrt(kotlin.math.abs(v.map { it * it }.sum()))
+fun abs(v: List<Double>): Double = sqrt((v.map { it * it }.sum()))
 
 /**
  * Простая (2 балла)
@@ -128,7 +128,7 @@ fun abs(v: List<Double>): Double = sqrt(kotlin.math.abs(v.map { it * it }.sum())
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0
-else list.map { it }.sum() / list.size
+else list.sum() / list.size
 
 /**
  * Средняя (3 балла)
@@ -138,7 +138,14 @@ else list.map { it }.sum() / list.size
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = mutableMapOf(it)
+fun center(list: MutableList<Double>): MutableList<Double> {
+    if (list.isEmpty()) return list
+    val averageArifm = mean(list)
+    for (i in 0 until list.size) {
+        list[i] -= averageArifm
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)

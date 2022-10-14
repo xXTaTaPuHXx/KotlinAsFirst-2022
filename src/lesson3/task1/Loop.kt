@@ -94,7 +94,7 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var num1 = 0
     var num2 = 1
-    var result = num1 + num2
+    var result = num2
     for (i in 3..n) {
         num1 = num2
         num2 = result
@@ -120,14 +120,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var divisor = n - 1
-    for (i in 1..n) {
-        if (n % divisor == 0) break
-        divisor -= 1
-    }
-    return divisor
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая (2 балла)
@@ -199,7 +192,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = n == revert(n)
+fun isPalindrome(n: Int): Boolean = TODO()
 
 /**
  * Средняя (3 балла)

@@ -21,11 +21,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean =
-    when {
-        (number / 1000 + number / 100 % 10) == (number % 10 + number % 100 / 10) -> true
-        else -> false
-    }
+fun isNumberHappy(number: Int): Boolean = (number / 1000 + number / 100 % 10) == (number % 10 + number % 100 / 10)
 
 /**
  * Простая (2 балла)
@@ -34,11 +30,7 @@ fun isNumberHappy(number: Int): Boolean =
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-    when {
-        x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y2 - y1) -> true
-        else -> false
-    }
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y2 - y1)
 
 /**
  * Простая (2 балла)
@@ -48,9 +40,8 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  */
 fun daysInMonth(month: Int, year: Int): Int =
     when {
-        month == 2 && (year % 100 == 0 && year % 400 != 0) -> 28
-        month == 2 && year % 4 == 0 -> 29
-        month == 2 && year % 4 != 0 -> 28
+        month == 2 && (year % 100 == 0 && year % 400 != 0) || (month == 2 && year % 4 != 0) -> 28
+        month == 2 -> 29
         month == 4 || month == 6 || month == 9 || month == 11 -> 30
         else -> 31
     }
@@ -65,11 +56,7 @@ fun daysInMonth(month: Int, year: Int): Int =
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean =
-    when {
-        sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2 - r1) && r1 <= r2 -> true
-        else -> false
-    }
+): Boolean = sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2 - r1) && r1 <= r2
 
 /**
  * Средняя (3 балла)
@@ -81,10 +68,10 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val minside = minOf(a, b, c)
-    val middleside = a + b + c - minside - maxOf(a, b, c)
+    val minSide = minOf(a, b, c)
+    val middleSide = a + b + c - minSide - maxOf(a, b, c)
     return when {
-        middleside <= r && minside <= s || minside <= r && middleside <= s -> true
+        middleSide <= r && minSide <= s || minSide <= r && middleSide <= s -> true
         else -> false
     }
 }
