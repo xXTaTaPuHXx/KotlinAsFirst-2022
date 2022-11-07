@@ -81,7 +81,7 @@ fun digitNumber(n: Int): Int {
     do {
         number /= 10
         count++
-    } while (number > 0)
+    } while (number != 0)
     return count
 }
 
@@ -181,7 +181,17 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var number = n
+    var number1 = 0
+    var number2 = 0
+    while (number > 0) {
+        number2 = number % 10
+        number1 = number1 * 10 + number2
+        number /= 10
+    }
+    return number1
+}
 
 /**
  * Средняя (3 балла)
@@ -192,7 +202,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
