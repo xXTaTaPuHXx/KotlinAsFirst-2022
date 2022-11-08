@@ -3,9 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.numberRevert
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -223,7 +221,20 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val newx = x % (2 * PI)
+    var i = 1
+    var indication = 1
+    var sinx = 20
+    var sinx1 = 0.0
+    while (abs(sinx) >= eps) {
+        sinx = indication * (newx.pow(i) / factorial(i)).toInt()
+        sinx1 += sinx
+        i += 2
+        indication = -indication
+    }
+    return sinx1
+}
 
 /**
  * Средняя (4 балла)
@@ -234,7 +245,21 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+
+fun cos(x: Double, eps: Double): Double {
+    val newx = x % (2 * PI)
+    var i = 0
+    var indication = 1
+    var cosx = 20.0
+    var cosx1 = 0.0
+    while (cosx >= abs(eps)) {
+        cosx = newx.pow(2 * i) / factorial(2 * i)
+        cosx1 += cosx * indication
+        i += 1
+        indication = -indication
+    }
+    return cosx1
+}
 
 /**
  * Сложная (4 балла)
