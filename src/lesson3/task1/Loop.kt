@@ -227,7 +227,7 @@ fun sin(x: Double, eps: Double): Double {
     var indication = 1
     var sinx = 20
     var sinx1 = 0.0
-    while (abs(sinx) >= eps) {
+    while (abs(sinx) >= abs(eps)) {
         sinx = indication * (newx.pow(i) / factorial(i)).toInt()
         sinx1 += sinx
         i += 2

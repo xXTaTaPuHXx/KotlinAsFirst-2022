@@ -1,6 +1,9 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "UNUSED_EXPRESSION")
 
 package lesson5.task1
+
+import ru.spbstu.kotlin.typeclass.classes.Monoid.Companion.plus
+import ru.spbstu.wheels.rangeTo
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -96,7 +99,14 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val second = mutableMapOf<Int, MutableList<String>>()
+    for ((name, grade) in grades) {
+        if (second[grade].isNullOrEmpty()) second += grade to mutableListOf(name)
+        else second[grade]?.add(name)
+    }
+    return second.toSortedMap()
+}
 
 /**
  * Простая (2 балла)

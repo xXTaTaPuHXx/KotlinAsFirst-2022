@@ -86,7 +86,14 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    Regex("""/d*/./d*/./d""").matches(""""/d*/./d*/./d""")
+    if (!Regex("""/d*/./d*/./d""").matches("ab")) return ""
+    val parts = digital.split(".")
+    var result = 0.0
+
+    return digital
+}
 
 /**
  * Средняя (4 балла)
