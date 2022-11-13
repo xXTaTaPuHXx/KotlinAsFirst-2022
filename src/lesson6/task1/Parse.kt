@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson3.task1.digitNumber
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -87,12 +89,11 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    Regex("""/d*/./d*/./d""").matches(""""/d*/./d*/./d""")
-    if (!Regex("""/d*/./d*/./d""").matches("ab")) return ""
+    if (!Regex("""/d*/./d*/./d""").matches("""/d*/./d*/./d""")) return ""
     val parts = digital.split(".")
-    var result = 0.0
+    var result = ""
 
-    return digital
+    return result
 }
 
 /**

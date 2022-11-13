@@ -90,7 +90,7 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var num1 = 0
+    var num1: Int
     var num2 = 1
     var result = num2
     for (i in 3..n) {
@@ -182,7 +182,7 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
 fun revert(n: Int): Int {
     var number = n
     var number1 = 0
-    var number2 = 0
+    var number2: Int
     while (number > 0) {
         number2 = number % 10
         number1 = number1 * 10 + number2
@@ -225,10 +225,10 @@ fun sin(x: Double, eps: Double): Double {
     val newx = x % (2 * PI)
     var i = 1
     var indication = 1
-    var sinx = 20
+    var sinx = 50.0
     var sinx1 = 0.0
-    while (abs(sinx) >= abs(eps)) {
-        sinx = indication * (newx.pow(i) / factorial(i)).toInt()
+    while (abs(sinx) >= eps) {
+        sinx = indication * (newx.pow(i) / factorial(i))
         sinx1 += sinx
         i += 2
         indication = -indication
@@ -250,7 +250,7 @@ fun cos(x: Double, eps: Double): Double {
     val newx = x % (2 * PI)
     var i = 0
     var indication = 1
-    var cosx = 20.0
+    var cosx = 50.0
     var cosx1 = 0.0
     while (cosx >= abs(eps)) {
         cosx = newx.pow(2 * i) / factorial(2 * i)
