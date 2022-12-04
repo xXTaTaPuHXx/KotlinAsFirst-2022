@@ -2,9 +2,6 @@
 
 package lesson5.task1
 
-import ru.spbstu.kotlin.typeclass.classes.Monoid.Companion.plus
-import ru.spbstu.wheels.rangeTo
-
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -18,8 +15,7 @@ import ru.spbstu.wheels.rangeTo
  * игнорируется.
  */
 fun shoppingListCost(
-    shoppingList: List<String>,
-    costs: Map<String, Double>
+    shoppingList: List<String>, costs: Map<String, Double>
 ): Double {
     var totalCost = 0.0
 
@@ -40,8 +36,7 @@ fun shoppingListCost(
  * для которых телефон начинается с заданного кода страны `countryCode`
  */
 fun filterByCountryCode(
-    phoneBook: MutableMap<String, String>,
-    countryCode: String
+    phoneBook: MutableMap<String, String>, countryCode: String
 ) {
     val namesToRemove = mutableListOf<String>()
 
@@ -63,8 +58,7 @@ fun filterByCountryCode(
  * и вернуть отфильтрованный текст
  */
 fun removeFillerWords(
-    text: List<String>,
-    vararg fillerWords: String
+    text: List<String>, vararg fillerWords: String
 ): List<String> {
     val fillerWordSet = setOf(*fillerWords)
 
@@ -100,12 +94,12 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val second = mutableMapOf<Int, MutableList<String>>()
+    val listOfGrades = mutableMapOf<Int, MutableList<String>>()
     for ((name, grade) in grades) {
-        if (second[grade].isNullOrEmpty()) second += grade to mutableListOf(name)
-        else second[grade]?.add(name)
+        if (listOfGrades[grade].isNullOrEmpty()) listOfGrades += grade to mutableListOf(name)
+        else listOfGrades[grade]?.add(name)
     }
-    return second.toSortedMap()
+    return listOfGrades
 }
 
 /**
@@ -118,7 +112,12 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key, value) in a) {
+        if (a[key] == b[key] && a[value] == b[value]) return true
+    }
+    return false
+}
 
 /**
  * Простая (2 балла)
@@ -134,8 +133,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Map<String, String> {
+    for ((key, value) in b) {
+        if (a.containsValue(value)) a.remove(key, value)
+    }
+    return a
 }
 
 /**
@@ -145,7 +147,13 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
+    val list = mutableListOf<String>()
+    for (i in 0..minOf(a.size, b.size)) {
+        if (a[i] == b[i]) list.add(a[i])
+    }
+    return a
+}
 
 /**
  * Средняя (3 балла)
@@ -176,7 +184,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =
+    stockPrices.groupBy({ it.first }, { it.second }).mapValues { it.value.average() }
 
 /**
  * Средняя (4 балла)
@@ -194,6 +203,9 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+//    val s = stuff.entries?.groupBy({ it.value }, { it.key })
+//    if (s.isNullOrEmpty()) return s.toString()
+//    else return null
 
 /**
  * Средняя (3 балла)

@@ -2,7 +2,6 @@
 
 package lesson3.task1
 
-import lesson1.task1.numberRevert
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -222,13 +221,13 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    val newx = x % (2 * PI)
+    val newX = x % (2 * PI)
     var i = 1
     var indication = 1
-    var sinx = 50.0
+    var sinx = Double.MAX_VALUE
     var sinx1 = 0.0
     while (abs(sinx) >= eps) {
-        sinx = indication * (newx.pow(i) / factorial(i))
+        sinx = indication * (newX.pow(i) / factorial(i))
         sinx1 += sinx
         i += 2
         indication = -indication
@@ -247,13 +246,13 @@ fun sin(x: Double, eps: Double): Double {
  */
 
 fun cos(x: Double, eps: Double): Double {
-    val newx = x % (2 * PI)
+    val newX = x % (2 * PI)
     var i = 0
     var indication = 1
-    var cosx = 50.0
+    var cosx = Double.MAX_VALUE
     var cosx1 = 0.0
     while (cosx >= abs(eps)) {
-        cosx = newx.pow(2 * i) / factorial(2 * i)
+        cosx = newX.pow(2 * i) / factorial(2 * i)
         cosx1 += cosx * indication
         i += 1
         indication = -indication

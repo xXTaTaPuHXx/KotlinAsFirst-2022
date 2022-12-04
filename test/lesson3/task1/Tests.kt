@@ -71,6 +71,8 @@ class Tests {
         assertEquals(2, digitNumber(99))
         assertEquals(3, digitNumber(123))
         assertEquals(10, digitNumber(Int.MAX_VALUE))
+        assertEquals(4, digitNumber(-5390))
+        assertEquals(7, digitNumber(-9999999))
     }
 
     @Test
@@ -131,6 +133,7 @@ class Tests {
         assertEquals(111, collatzSteps(1000))
         assertEquals(128, collatzSteps(100000))
     }
+
     @Test
     @Tag("3")
     fun lcm() {

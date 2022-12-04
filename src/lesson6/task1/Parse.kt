@@ -2,7 +2,7 @@
 
 package lesson6.task1
 
-import lesson3.task1.digitNumber
+import lesson2.task2.daysInMonth
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -76,7 +76,32 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val dataPieces = str.split(" ")
+    val list =
+        mapOf(
+            "января" to "01",
+            "февраля" to "02",
+            "марта" to "03",
+            "апреля" to "04",
+            "мая" to "05",
+            "июня" to "06",
+            "июля" to "07",
+            "августа" to "08",
+            "сентября" to "09",
+            "октября" to "10",
+            "ноября" to "11",
+            "декабря" to "12"
+        )
+    if (dataPieces.size < 3 || dataPieces.size > 3 || !list.contains(dataPieces[1])) return ""
+    val days = dataPieces[0]
+    val months = list[dataPieces[1]]
+    val year = dataPieces[2].toInt()
+    if (months != null) {
+        if (days > daysInMonth(months.toInt(), year).toString()) return ""
+    }
+    return ("${twoDigitStr(days.toInt())}.$months.$year")
+}
 
 /**
  * Средняя (4 балла)
@@ -89,11 +114,28 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    if (!Regex("""/d*/./d*/./d""").matches("""/d*/./d*/./d""")) return ""
-    val parts = digital.split(".")
-    var result = ""
-
-    return result
+    val piecesofNumbers = digital.split(".")
+    val list =
+        mapOf(
+            "01" to "января",
+            "02" to "февраля",
+            "03" to "марта",
+            "04" to "апреля",
+            "05" to "мая",
+            "06" to "июня",
+            "07" to "июля",
+            "08" to "августа",
+            "09" to "сентября",
+            "10" to "октября",
+            "11" to "ноября",
+            "12" to "декабря"
+        )
+    if (piecesofNumbers.size > 3 || !list.contains(piecesofNumbers[1])) return ""
+    val days = piecesofNumbers[0].toInt().toString()
+    val months = list[piecesofNumbers[1]]
+    val year = piecesofNumbers[2]
+    if (days > daysInMonth(piecesofNumbers[1].toInt(), year.toInt()).toString()) return ""
+    return ("$days $months $year")
 }
 
 /**
@@ -110,7 +152,12 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val split1 = phone.replace("-", "")
+    if (!Regex("""(\+\d \(\d{3}\))? \d{3}\d{2}\d{2}""").matches(phone)) return ""
+    val split3 = split1.replace(")(", "")
+    return split3.replace(" ", "")
+}
 
 /**
  * Средняя (5 баллов)
