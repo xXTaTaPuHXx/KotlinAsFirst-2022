@@ -114,7 +114,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val piecesofNumbers = digital.split(".")
+    val piecesOfNumbers = digital.split(".")
     val list =
         mapOf(
             "01" to "января",
@@ -130,11 +130,11 @@ fun dateDigitToStr(digital: String): String {
             "11" to "ноября",
             "12" to "декабря"
         )
-    if (piecesofNumbers.size > 3 || !list.contains(piecesofNumbers[1])) return ""
-    val days = piecesofNumbers[0].toInt().toString()
-    val months = list[piecesofNumbers[1]]
-    val year = piecesofNumbers[2]
-    if (days > daysInMonth(piecesofNumbers[1].toInt(), year.toInt()).toString()) return ""
+    if ((piecesOfNumbers.size > 3) || (piecesOfNumbers.size < 3) || (piecesOfNumbers[1] !in list)) return ""
+    val days = piecesOfNumbers[0].toInt()
+    val months = list[piecesOfNumbers[1]]
+    val year = piecesOfNumbers[2].toInt()
+    if (days > daysInMonth(piecesOfNumbers[1].toInt(), year)) return ""
     return ("$days $months $year")
 }
 
