@@ -3,6 +3,9 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import ru.spbstu.wheels.get
+import java.lang.NumberFormatException
+import kotlin.math.max
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -153,10 +156,12 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    val split1 = phone.replace("-", "")
-    if (!Regex("""(\+\d \(\d{3}\))? \d{3}\d{2}\d{2}""").matches(phone)) return ""
-    val split3 = split1.replace(")(", "")
-    return split3.replace(" ", "")
+    if ("()" in phone) return ""
+    val dashesRemove = phone.replace("-", "")
+    val removeBrackets = dashesRemove.replace("(", "").replace(")", "")
+    val gapsRemove = removeBrackets.replace(" ", "")
+    if (!Regex("""\+?\d+""").matches(gapsRemove)) return ""
+    return gapsRemove
 }
 
 /**
@@ -169,7 +174,17 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int =
+    try {
+        val a = jumps.replace("% ", "").replace("- ", "").split(" ")
+        var count = 0
+        for (i in a.indices) {
+            if (a[i].toInt() > count) count = a[i].toInt()
+        }
+        count
+    } catch (e: NumberFormatException) {
+        -1
+    }
 
 /**
  * Сложная (6 баллов)
