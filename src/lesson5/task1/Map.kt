@@ -187,6 +187,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =
     stockPrices.groupBy({ it.first }, { it.second }).mapValues { it.value.average() }
 
+
 /**
  * Средняя (4 балла)
  *
@@ -202,7 +203,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 //    val s = stuff.entries?.groupBy({ it.value }, { it.key })
 //    if (s.isNullOrEmpty()) return s.toString()
 //    else return null

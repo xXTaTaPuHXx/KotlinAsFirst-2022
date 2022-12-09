@@ -4,6 +4,7 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import ru.spbstu.wheels.get
+import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 import kotlin.math.max
 
@@ -176,12 +177,12 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int =
     try {
-        val a = jumps.replace("% ", "").replace("- ", "").split(" ")
-        var count = 0
-        for (i in a.indices) {
-            if (a[i].toInt() > count) count = a[i].toInt()
+        val onlyJumps = jumps.replace("% ", "").replace("- ", "").split(" ")
+        var maxCount = 0
+        for (i in onlyJumps.indices) {
+            if (onlyJumps[i].toInt() > maxCount) maxCount = onlyJumps[i].toInt()
         }
-        count
+        maxCount
     } catch (e: NumberFormatException) {
         -1
     }
@@ -208,7 +209,20 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!Regex("""\d+( [+-] \d+)*""").matches(expression)) throw IllegalArgumentException()
+    val split = expression.split(" ")
+    var res = split[0].toInt()
+    var i = 1
+    while (i < split.size) {
+        when {
+            split[i] == "+" -> res += split[i + 1].toInt()
+            split[i] == "-" -> res -= split[i + 1].toInt()
+        }
+        i += 2
+    }
+    return res
+}
 
 /**
  * Сложная (6 баллов)
