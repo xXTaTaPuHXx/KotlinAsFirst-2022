@@ -4,8 +4,6 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.minDivisor
-import java.util.*
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -279,13 +277,13 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     var number = n
-    val listofRim = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    val listofInt = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val listOfRim = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val listOfInt = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     val newString = buildString {
-        for (i in listofRim.indices) {
-            while (number % listofInt[i] != number) {
-                append(listofRim[i])
-                number -= listofInt[i]
+        for (i in listOfRim.indices) {
+            while (number % listOfInt[i] != number) {
+                append(listOfRim[i])
+                number -= listOfInt[i]
             }
         }
     }

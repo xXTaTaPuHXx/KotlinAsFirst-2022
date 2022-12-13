@@ -113,8 +113,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    for ((key, value) in a) {
-        if (a[key] == b[key] && a[value] == b[value]) return true
+    for ((key) in a) {
+        if (a[key] == b[key]) return true
     }
     return false
 }
@@ -135,7 +135,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Map<String, String> {
     for ((key, value) in b) {
-        if (a.containsValue(value)) a.remove(key, value)
+        a.remove(key, value)
     }
     return a
 }
@@ -147,13 +147,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Map<Strin
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val list = mutableListOf<String>()
-    for (i in 0..minOf(a.size, b.size)) {
-        if (a[i] == b[i]) list.add(a[i])
-    }
-    return a
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
 
 /**
  * Средняя (3 балла)

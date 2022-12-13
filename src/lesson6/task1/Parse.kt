@@ -3,10 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import ru.spbstu.wheels.get
-import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
-import kotlin.math.max
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -82,7 +79,7 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     val dataPieces = str.split(" ")
-    val list =
+    val mapOfMonths =
         mapOf(
             "января" to "01",
             "февраля" to "02",
@@ -97,9 +94,9 @@ fun dateStrToDigit(str: String): String {
             "ноября" to "11",
             "декабря" to "12"
         )
-    if (dataPieces.size < 3 || dataPieces.size > 3 || !list.contains(dataPieces[1])) return ""
+    if (dataPieces.size != 3 || !mapOfMonths.contains(dataPieces[1])) return ""
     val days = dataPieces[0]
-    val months = list[dataPieces[1]]
+    val months = mapOfMonths[dataPieces[1]]
     val year = dataPieces[2].toInt()
     if (months != null) {
         if (days > daysInMonth(months.toInt(), year).toString()) return ""
@@ -119,7 +116,7 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val piecesOfNumbers = digital.split(".")
-    val list =
+    val mapOfMonths =
         mapOf(
             "01" to "января",
             "02" to "февраля",
@@ -134,9 +131,9 @@ fun dateDigitToStr(digital: String): String {
             "11" to "ноября",
             "12" to "декабря"
         )
-    if ((piecesOfNumbers.size > 3) || (piecesOfNumbers.size < 3) || (piecesOfNumbers[1] !in list)) return ""
+    if (piecesOfNumbers.size != 3 || (piecesOfNumbers[1] !in mapOfMonths)) return ""
     val days = piecesOfNumbers[0].toInt()
-    val months = list[piecesOfNumbers[1]]
+    val months = mapOfMonths[piecesOfNumbers[1]]
     val year = piecesOfNumbers[2].toInt()
     if (days > daysInMonth(piecesOfNumbers[1].toInt(), year)) return ""
     return ("$days $months $year")
@@ -210,7 +207,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (!Regex("""\d+( [+-] \d+)*""").matches(expression)) throw IllegalArgumentException()
+    require(Regex("""\d+( [+-] \d+)*""").matches(expression))
     val split = expression.split(" ")
     var res = split[0].toInt()
     var i = 1
