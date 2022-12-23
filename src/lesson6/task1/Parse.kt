@@ -3,7 +3,6 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import java.lang.NumberFormatException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -98,9 +97,8 @@ fun dateStrToDigit(str: String): String {
     val days = dataPieces[0]
     val months = mapOfMonths[dataPieces[1]]
     val year = dataPieces[2].toInt()
-    if (months != null) {
-        if (days > daysInMonth(months.toInt(), year).toString()) return ""
-    }
+    days.toIntOrNull()
+    if (days > daysInMonth(months!!.toIntOrNull()!!, year).toString()) return ""
     return ("${twoDigitStr(days.toInt())}.$months.$year")
 }
 
@@ -132,10 +130,10 @@ fun dateDigitToStr(digital: String): String {
             "12" to "декабря"
         )
     if (piecesOfNumbers.size != 3 || (piecesOfNumbers[1] !in mapOfMonths)) return ""
-    val days = piecesOfNumbers[0].toInt()
+    val days = piecesOfNumbers[0].toIntOrNull()!!
     val months = mapOfMonths[piecesOfNumbers[1]]
     val year = piecesOfNumbers[2].toInt()
-    if (days > daysInMonth(piecesOfNumbers[1].toInt(), year)) return ""
+    if (days > daysInMonth(piecesOfNumbers[1].toIntOrNull()!!, year)) return ""
     return ("$days $months $year")
 }
 
@@ -154,7 +152,7 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    if ("()" in phone) return ""
+    if ("()" in phone || "((" in phone || ")(" in phone || "))" in phone) return ""
     val dashesRemove = phone.replace("-", "")
     val removeBrackets = dashesRemove.replace("(", "").replace(")", "")
     val gapsRemove = removeBrackets.replace(" ", "")
