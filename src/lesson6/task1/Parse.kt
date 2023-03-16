@@ -151,6 +151,8 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
+
+
 fun flattenPhoneNumber(phone: String): String {
     if ("()" in phone || "((" in phone || ")(" in phone || "))" in phone) return ""
     val dashesRemove = phone.replace("-", "")
@@ -159,6 +161,7 @@ fun flattenPhoneNumber(phone: String): String {
     if (!Regex("""\+?\d+""").matches(gapsRemove)) return ""
     return gapsRemove
 }
+
 
 /**
  * Средняя (5 баллов)
@@ -170,17 +173,16 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int =
-    try {
-        val onlyJumps = jumps.replace("% ", "").replace("- ", "").split(" ")
-        var maxCount = 0
-        for (i in onlyJumps.indices) {
-            if (onlyJumps[i].toInt() > maxCount) maxCount = onlyJumps[i].toInt()
-        }
-        maxCount
-    } catch (e: NumberFormatException) {
-        -1
+fun bestLongJump(jumps: String): Int {
+    if (Regex("""([^0123456789]|[^%]|[^-])""").matches(jumps)) return -1
+    val onlyJumps = jumps.replace("% ", "").replace("- ", "").split(" ")
+    var maxCount = 0
+    for (i in onlyJumps.indices) {
+        if (onlyJumps[i].toInt() > maxCount) maxCount = onlyJumps[i].toInt()
     }
+    return maxCount
+}
+
 
 /**
  * Сложная (6 баллов)

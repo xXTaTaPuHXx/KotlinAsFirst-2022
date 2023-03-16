@@ -17,7 +17,7 @@ import kotlin.math.*
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -169,7 +169,18 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    val list1 = mutableListOf<Int>()
+    val list2 = mutableListOf<Int>()
+    for (i in 2..max(m, n)) {
+        if (m % i == 0) list1 += i
+        if (n % i == 0) list2 += i
+    }
+    for (j in list1) {
+        if (list2.contains(j)) return false
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -178,6 +189,7 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+
 fun revert(n: Int): Int {
     var number = n
     var number1 = 0
@@ -209,7 +221,15 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var newn = n
+    while (newn > 0) {
+        val nextDigit = n % 10
+        if (newn % 10 != nextDigit) return true
+        newn /= 10
+    }
+    return false
+}
 
 /**
  * Средняя (4 балла)

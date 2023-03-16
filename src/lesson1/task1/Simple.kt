@@ -2,7 +2,6 @@
 
 package lesson1.task1
 
-import lesson3.task1.revert
 import kotlin.math.*
 
 // Урок 1: простые функции
@@ -130,3 +129,11 @@ fun accountInThreeYears(initial: Int, percent: Int): Double =
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int = (number % 10 * 100) + (number / 10 % 10 * 10) + (number / 100)
+
+
+fun bebra(number: Int) {
+    val list = listOf(1.0, 3.0, 4.0)
+    val result = list.associateWith { it / 2 }
+    println(result.keys)
+    println(result.values)
+}

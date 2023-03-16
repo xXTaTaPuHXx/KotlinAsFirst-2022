@@ -16,7 +16,7 @@ package lesson11.task1
  * - либо соответствовать одной из приставок, к которой приписана сама размерность (Km, Kg, mm, mg)
  * - во всех остальных случаях следует бросить IllegalArgumentException
  */
-class DimensionalValue(value: Double, dimension: String) : Comparable<DimensionalValue> {
+class DimensionalValue(a: Double, dimension: String) : Comparable<DimensionalValue> {
     /**
      * Величина с БАЗОВОЙ размерностью (например для 1.0Kg следует вернуть результат в граммах -- 1000.0)
      */

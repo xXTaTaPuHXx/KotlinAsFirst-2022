@@ -18,8 +18,7 @@ class Tests {
     fun alignFile() {
         alignFile("input/align_in1.txt", 50, "temp.txt")
         assertFileContent(
-            "temp.txt",
-            """Для написания разных видов программ сейчас
+            "temp.txt", """Для написания разных видов программ сейчас
 применяются разные языки программирования.
 Например, в сфере мобильных программ сейчас правят
 бал языки Swift (мобильные устройства под
@@ -62,8 +61,7 @@ Basic, Ruby, Swift.
     fun deleteMarked() {
         deleteMarked("input/delete_in1.txt", "temp.txt")
         assertFileContent(
-            "temp.txt",
-            """Задачи _надо_ решать правильно,
+            "temp.txt", """Задачи _надо_ решать правильно,
 
 и не надо при этом никуда торопиться___
             """.trimIndent()
@@ -93,8 +91,7 @@ Basic, Ruby, Swift.
     fun sibilants() {
         sibilants("input/sibilants_in1.txt", "temp.txt")
         assertFileContent(
-            "temp.txt",
-            """/**
+            "temp.txt", """/**
  * Простая
  *
  * В русском языке, как правило, после букв Ж, Ч, Ш, Щ пишется И, А, У, а не Ы, Я, Ю.
@@ -117,8 +114,7 @@ Basic, Ruby, Swift.
     fun centerFile() {
         centerFile("input/center_in1.txt", "temp.txt")
         assertFileContent(
-            "temp.txt",
-            """              Съешь же ещё этих мягких французских булок, да выпей чаю.
+            "temp.txt", """              Съешь же ещё этих мягких французских булок, да выпей чаю.
 Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.
                                         Тест
                                           """ +  // Avoiding trailing whitespaces problem
@@ -136,8 +132,7 @@ Basic, Ruby, Swift.
     fun alignFileByWidth() {
         alignFileByWidth("input/width_in1.txt", "temp.txt")
         assertFileContent(
-            "temp.txt",
-            """Простая
+            "temp.txt", """Простая
 
 Во       входном       файле       с       именем       inputName       содержится       некоторый      текст.
 Вывести   его  в  выходной  файл  с  именем  outputName,  выровняв  по  левому  и  правому  краю  относительно
@@ -234,8 +229,7 @@ Basic, Ruby, Swift.
 
     private fun checkHtmlSimpleExample() {
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
-        val expected =
-            """
+        val expected = """
                     <html>
                         <body>
                             <p>
@@ -262,8 +256,7 @@ Basic, Ruby, Swift.
 
     private fun checkHtmlListsExample() {
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
-        val expected =
-            """
+        val expected = """
                     <html>
                       <body>
                         <p>
@@ -335,9 +328,7 @@ Basic, Ruby, Swift.
         }
 
         test(
-            19935,
-            111,
-            """
+            19935, 111, """
                 19935
              *    111
              --------
@@ -350,9 +341,7 @@ Basic, Ruby, Swift.
         )
 
         test(
-            12345,
-            76,
-            """
+            12345, 76, """
                12345
              *    76
              -------
@@ -364,9 +353,7 @@ Basic, Ruby, Swift.
         )
 
         test(
-            12345,
-            6,
-            """
+            12345, 6, """
               12345
              *    6
              ------
@@ -389,9 +376,7 @@ Basic, Ruby, Swift.
         }
 
         test(
-            19935,
-            22,
-            """
+            19935, 22, """
               19935 | 22
              -198     906
              ----
@@ -406,9 +391,7 @@ Basic, Ruby, Swift.
         )
 
         test(
-            2,
-            20,
-            """
+            2, 20, """
               2 | 20
              -0   0
              --
@@ -417,9 +400,7 @@ Basic, Ruby, Swift.
         )
 
         test(
-            99999,
-            1,
-            """
+            99999, 1, """
               99999 | 1
              -9       99999
              --
@@ -440,5 +421,113 @@ Basic, Ruby, Swift.
         )
 
         File("temp.txt").delete()
+    }
+
+    @Test
+    fun foo() {
+        assertEquals(
+            listOf(1, 3, 3, 3), foo(
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName.txt", listOf(3, 1, 2, 1)
+            )
+        )
+    }
+
+    @Test
+    fun foo1() {
+        assertEquals(
+            "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\outputName.txt", foo1(
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName1.txt",
+                listOf("2 Второй акт", "5 Следущая часть", "7 Продолжение"),
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\outputName.txt"
+            )
+        )
+    }
+
+    @Test
+    fun foo4() {
+        assertEquals(
+            listOf("Приготовить еду", "Вымыть пол"), foo4(
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName2.txt", 90
+            )
+        )
+    }
+
+    @Test
+    fun foo3() {
+        assertEquals(
+            "трамвай 3", foo3(
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName3.txt",
+                "Парк отдыха",
+                "Проспект мира"
+            )
+        )
+
+    }
+
+    @Test
+    fun foo2() {
+
+    }
+
+    @Test
+    fun matrixtask() {
+        val a = listOf(listOf(1, 2), listOf(4, 3), listOf(5, 6))
+        val b = listOf(listOf(1, 4, 5), listOf(2, 3, 6))
+        assertEquals(b, matrixtask(a))
+    }
+
+    @Test
+    fun rotateMatrixClockwise() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = listOf(listOf(7, 4, 1), listOf(8, 5, 2), listOf(9, 6, 3))
+        assertEquals(b, rotateMatrixClockwise(a))
+    }
+
+    @Test
+    fun sumMatrixRows() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = listOf(6, 15, 24)
+        assertEquals(b, sumMatrixRows(a))
+    }
+
+    @Test
+    fun findMaxElement() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = 9
+        assertEquals(b, findMaxElement(a))
+    }
+
+    @Test
+    fun trianglematrix() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = listOf(listOf(1, 2, 3), listOf(5, 6), listOf(9))
+        assertEquals(b, trianglematrix(a))
+    }
+
+    @Test
+    fun findMaxPath() {
+        val a = listOf(
+            listOf(3, 7, 9, 2, 7),
+            listOf(9, 8, 3, 5, 5),
+            listOf(1, 7, 9, 8, 5),
+            listOf(3, 8, 6, 4, 10),
+            listOf(6, 3, 9, 7, 8)
+        )
+        val b = 67
+        assertEquals(b, findMaxPath(a))
+    }
+
+    @Test
+    fun stringParsing() {
+        val a = listOf("2+3-5+10")
+        val b = 10
+        assertEquals(b, stringParsing(a))
+    }
+
+    @Test
+    fun averageDiagonal() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = 5.0
+        assertEquals(b, averageDiagonal(a))
     }
 }

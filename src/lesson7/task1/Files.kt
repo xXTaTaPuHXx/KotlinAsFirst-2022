@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.io.FileWriter
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -63,7 +64,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val newLine = File(outputName).bufferedWriter()
+    val newLine = FileWriter(outputName)
     for (oldLine in File(inputName).readLines()) {
         if (oldLine.isEmpty() || oldLine.first() != '_') newLine.write(oldLine + "\n")
     }
@@ -461,3 +462,256 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
 
+fun foo(InputName: String, registers: List<Int>): List<Int> {
+    val registers1 = registers.toMutableList()
+    val k = File("C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName.txt").readLines()
+    var i = 0
+    while (i != k.size) {
+        if (!Regex("""(((MOV|SWAP)\sR?\d+)?,\sR\d+)|(GOTO\s\d+)""").matches(k[i])) throw IllegalArgumentException()
+        val file1 = k[i].replace(",", "").split(" ").toMutableList()
+        val function = file1[0]
+        file1.remove(function)
+        when {
+            (file1[0].replace("R", "").toInt() > registers.size) -> throw IllegalStateException()
+            (file1[1].replace("R", "").toInt() > registers.size) -> throw IllegalStateException()
+        }
+        when (function) {
+            "MOV" -> {
+                registers1[file1[1][1].digitToInt()] = registers1[file1[0][1].digitToInt()]
+            }
+
+            "SWAP" -> {
+                val swarp = registers1[file1[0][1].toString().toInt()]
+                registers1[file1[0][1].toString().toInt()] = registers1[file1[1][1].toString().toInt()]
+                registers1[file1[1][1].toString().toInt()] = swarp
+            }
+
+            "GOTO" -> {
+                i = file1[0].toInt()
+                i--
+            }
+        }
+        i++
+    }
+    println(registers1)
+    return registers1
+}
+
+// Ассемблер
+fun foo1(InputName1: String, changes: List<String>, outputName: String): String {
+    val outputfile = FileWriter(outputName, true)
+    val changes1 = changes.toMutableList()
+    for (line in File("C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName1.txt").readLines()) {
+        outputfile.write(line + "\n")
+        val b = mutableListOf<String>()
+        for (i in changes1.indices) {
+            val a = changes1[i].split(" ").toMutableList()
+            b += a
+        }
+        // if (!Regex("""\d(\s\w+)+""").matches(InputName1)) throw java.lang.IllegalArgumentException()
+        val file = line.split(" ").toMutableList()
+        val first = file[0].toInt()
+        try {
+
+            if (first < b[0].toInt()) {
+                outputfile.write(changes1[0] + "\n")
+                changes1.remove(changes1[0])
+            } else (outputfile.write(changes1[0]))
+        } catch (_: IndexOutOfBoundsException) {
+            break
+        }
+    }
+    outputfile.close()
+    println(outputfile)
+    return outputName
+}
+
+// Вставить строку в файл
+fun foo2(InputName2: String, limit: Int): List<String> {
+    val k = File("C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName2.txt").readLines()
+    val answer = mutableListOf<String>()
+    val list1 = mutableListOf<Int>()
+    val list2 = mutableListOf<Int>()
+    var line = 0
+    while (line != k.size) {
+        val a = k[line].split("--")
+        val b = a[1].split(",")
+        val priority = b[0].replace(" ", "")
+        val time = b[1].replace(" ", "")
+        val priorityInt = priority.replace("важность", "").toInt() // для сравнения важности
+        val timeInt = time.replace("мин", "").toInt() // для сравнения времени
+        list1 += priorityInt
+        list2 += timeInt
+        line++
+    }
+    while (limit > 0) {
+        list1.sortedDescending()
+        list2.sortedDescending()
+        for (i in list2.indices) {
+            val y = Pair(list1[i], list2[i])
+            limit - y.second
+            answer
+        }
+        listOf("")
+    }
+    return listOf()
+}
+
+// недоделал
+fun foo3(InputName3: String, src: String, dst: String): String {
+    val file3 = File(InputName3).readLines()
+    var i = 0
+    while (i != file3.size) {
+        val parts = file3[i].split(" ")
+        val transport = parts[0]
+        val a = file3[i].split(" ")
+        val b = a.subList(2, a.size)
+        val srcSplited = src.split(" ")
+        val dstSplited = dst.split(" ")
+        val srcI = b.indexOf(srcSplited[1])
+        val dstI = b.indexOf(dstSplited[1])
+        if (srcI != -1 && dstI != -1 && srcI < dstI)
+            return "$transport ${parts[1]}"
+        i++
+    }
+    return ""
+}
+// Маршрутка
+
+fun foo4(InputName2: String, limit: Int): List<String> {
+    val fileContent = File(InputName2).readLines()
+    val tasks = fileContent.map { taskString ->
+        val parts = taskString.split(" -- ")
+        val name = parts[0]
+        val importance = parts[1].split(", ")[0].split(" ")[1].toInt()
+        val time = parts[1].split(", ")[1].split(" ")[0].toInt()
+        Triple(name, importance, time)
+    }
+    val sortedTasks = tasks.sortedByDescending { it.second }
+    val possiblePairs = mutableListOf<Pair<Triple<String, Int, Int>, Triple<String, Int, Int>>>()
+    for (i in 0 until sortedTasks.size - 1) {
+        for (j in i + 1 until sortedTasks.size) {
+            val task1 = sortedTasks[i]
+            val task2 = sortedTasks[j]
+            if (task1.third + task2.third <= limit) {
+                possiblePairs.add(Pair(task1, task2))
+            }
+        }
+    }
+    return possiblePairs.maxByOrNull { it.first.second + it.second.second }
+        ?.let { listOf(it.first.first, it.second.first) } ?: emptyList()
+}
+
+
+fun matrixtask(matrix: List<List<Int>>): List<List<Int>> {
+    val list = mutableListOf<Int>()
+    val b = matrix[0].size
+    for (i in matrix.indices) {
+        if (matrix[i].size == b) continue
+    }
+    for (row in matrix) {
+        for (element in row) {
+            list.add(element)
+            if (list.toSet().size == list.size) return List(b) { col ->
+                List(matrix.size) { row ->
+                    matrix[row][col]
+                }
+            }
+            else continue
+        }
+    }
+    return listOf()
+}
+
+fun rotateMatrixClockwise(matrix: List<List<Int>>): List<List<Int>> {
+    val numRows = matrix.size
+    val numCols = matrix[0].size
+    val matrix1 = List(numRows) { row -> List(numCols) { col -> matrix[col][row] } }.map { it.reversed() }
+    if (numRows == numCols) {
+        return matrix1
+    }
+    return listOf()
+}
+
+fun sumMatrixRows(matrix: List<List<Int>>): List<Int> {
+    matrix.size
+    matrix[0].size
+    val anwer = mutableListOf<Int>()
+    for (i in matrix.indices) {
+        anwer += matrix[i].sumOf { it }
+    }
+
+    return anwer
+}
+
+fun findMaxElement(matrix: List<List<Int>>): Int = matrix.flatten().max()
+fun averageMatrix(matrix: List<List<Int>>): List<List<Int>> {
+    TODO()
+}
+
+fun trianglematrix(matrix: List<List<Int>>): List<List<Int>> {
+    var sum = 0
+    for (i in matrix[0].indices) {
+        val maxIndexStr = matrix[i].maxOf { it }
+        val v = matrix[i].indexOf(maxIndexStr)
+        for (j in matrix.indices) {
+            val c = matrix[i][j]
+            sum += c
+            val b = 0
+        }
+    }
+    return listOf()
+}
+
+fun findMaxPath(matrix: List<List<Int>>): Int {
+    val n = matrix.size
+    val m = matrix[0].size
+    val dp = Array(n) { IntArray(m) }
+
+    // инициализация первой строки и первого столбца
+    dp[0][0] = matrix[0][0]
+    for (i in 1 until n) {
+        dp[i][0] = dp[i - 1][0] + matrix[i][0]
+    }
+    for (j in 1 until m) {
+        dp[0][j] = dp[0][j - 1] + matrix[0][j]
+    }
+
+    // заполнение остальной матрицы
+    for (i in 1 until n) {
+        for (j in 1 until m) {
+            dp[i][j] = matrix[i][j] + maxOf(dp[i - 1][j], dp[i][j - 1])
+        }
+    }
+
+    // возвращаем максимальную сумму элементов пути до правого нижнего угла матрицы
+    return dp[n - 1][m - 1]
+}
+
+fun stringParsing(numbers: List<String>): Int {
+    var answer = 0
+    var j = 0
+    val split = numbers[0].replace("-", ".").replace("+", ".").split(".")
+    try {
+        for (i in 0..numbers[0].length) {
+            if (numbers[0][i].toString() == "+") {
+                answer += split[j].toInt()
+                j++
+            }
+            if (numbers[0][i].toString() == "-") {
+                answer += split[j].toInt()
+                j++
+            }
+        }
+    } catch (_: StringIndexOutOfBoundsException) {
+    }
+    return answer
+}
+
+fun averageDiagonal(matrix: List<List<Int>>): Double {
+    val diagonal = mutableListOf<Int>()
+    for (i in matrix.indices) {
+        diagonal += matrix[i][i]
+    }
+    return diagonal.sumOf { it }.toDouble() / diagonal.size
+}
