@@ -70,12 +70,10 @@ class PhoneBook {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        for ((key, value) in bookOfPhones) {
-            if (key.contains(name) && !value.contains(phone)) return false
-        }
-        if (!bookOfPhones.keys.contains(name)) return false
-        bookOfPhones.remove(phone)
-        return true
+        return if (name in bookOfPhones.keys && bookOfPhones[name]?.contains(phone) == true) {
+            bookOfPhones[name]?.remove(phone)
+            true
+        } else false
     }
 
     /**
