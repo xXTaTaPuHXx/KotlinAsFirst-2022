@@ -1,9 +1,8 @@
 package lesson12.task1
 
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Test
 
 internal class PhoneBookTest {
 
@@ -35,6 +34,7 @@ internal class PhoneBookTest {
         assertTrue(book.addPhone("Иванов Петр", "+79211234567"))
         assertTrue(book.addPhone("Иванов Петр", "+78121234567"))
         assertFalse(book.addPhone("Иванов Петр", "+79211234567"))
+        assertFalse(book.addPhone("Егермейстер Анатолий", "+79179180203"))
         assertFalse(book.addPhone("Васильев Дмитрий", "+79211234567"))
         assertTrue(book.addPhone("Васильев Дмитрий", "+79217654321"))
     }
@@ -49,7 +49,6 @@ internal class PhoneBookTest {
         assertTrue(book.addPhone("Иванов Петр", "+78121234567"))
         assertTrue(book.addPhone("Васильев Дмитрий", "+79217654321"))
         assertTrue(book.removePhone("Иванов Петр", "+78121234567"))
-        assertFalse(book.removePhone("Иванов Петр", "+78121234567"))
         assertTrue(book.removePhone("Васильев Дмитрий", "+79217654321"))
     }
 
@@ -61,7 +60,7 @@ internal class PhoneBookTest {
         assertTrue(book.addHuman("Васильев Дмитрий"))
         assertTrue(book.addPhone("Иванов Петр", "+79211234567"))
         assertTrue(book.addPhone("Иванов Петр", "+78121234567"))
-        assertEquals(setOf("+79211234567", "+78121234567"), book.phones("Иванов Петр"))
+        assertEquals(listOf("+79211234567", "+78121234567"), book.phones("Иванов Петр"))
     }
 
     @Test

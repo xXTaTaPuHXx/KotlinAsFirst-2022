@@ -20,7 +20,7 @@ class FixedPointNumber : Comparable<FixedPointNumber> {
     /**
      * Точность - число десятичных цифр после запятой.
      */
-    val precision: Int get() = 3
+    val precision: Int get() = TODO()
 
     /**
      * Конструктор из строки, точность выбирается в соответствии
@@ -30,7 +30,9 @@ class FixedPointNumber : Comparable<FixedPointNumber> {
      *
      * Внимание: этот или другой конструктор можно сделать основным
      */
-    constructor(s: String)
+    constructor(s: String) {
+        TODO()
+    }
 
     /**
      * Конструктор из вещественного числа с заданной точностью

@@ -15,7 +15,9 @@ package lesson12.task1
  *
  * В конструктор передаётся название станции отправления для данного расписания.
  */
-class TrainTimeTable(val baseStationName: String) {
+class TrainTimeTable(private val baseStationName: String) {
+    private var trains = mutableMapOf<String, Train>()
+
     /**
      * Добавить новый поезд.
      *
@@ -27,7 +29,14 @@ class TrainTimeTable(val baseStationName: String) {
      * @return true, если поезд успешно добавлен, false, если такой поезд уже есть
      */
     fun addTrain(train: String, depart: Time, destination: Stop): Boolean {
-        TODO()
+        for (i in train.indices) {
+            return if (trains[train] != null) false
+            else {
+                trains[train] = Train(train, Stop(baseStationName, depart), destination)
+                true
+            }
+        }
+        return true
     }
 
     /**
@@ -38,7 +47,14 @@ class TrainTimeTable(val baseStationName: String) {
      * @param train название поезда
      * @return true, если поезд успешно удалён, false, если такой поезд не существует
      */
-    fun removeTrain(train: String): Boolean = TODO()
+    fun removeTrain(train: String): Boolean {
+        return if (trains[train] != null) {
+            false
+        } else {
+            trains.remove(train)
+            true
+        }
+    }
 
     /**
      * Добавить/изменить начальную, промежуточную или конечную остановку поезду.
@@ -90,6 +106,11 @@ class TrainTimeTable(val baseStationName: String) {
      * и поезда с тем же именем останавливаются на одинаковых станциях в одинаковое время.
      */
     override fun equals(other: Any?): Boolean = TODO()
+    override fun hashCode(): Int {
+        var result = baseStationName.hashCode()
+        result = 31 * result + trains.hashCode()
+        return result
+    }
 }
 
 /**

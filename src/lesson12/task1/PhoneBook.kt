@@ -18,13 +18,21 @@ package lesson12.task1
  * Класс должен иметь конструктор по умолчанию (без параметров).
  */
 class PhoneBook {
+    private var bookOfPhones = mutableMapOf<String, MutableList<String>>()
+
     /**
      * Добавить человека.
      * Возвращает true, если человек был успешно добавлен,
      * и false, если человек с таким именем уже был в телефонной книге
      * (во втором случае телефонная книга не должна меняться).
      */
-    fun addHuman(name: String): Boolean = TODO()
+    fun addHuman(name: String): Boolean {
+        if (!bookOfPhones.containsKey(name)) {
+            bookOfPhones[name] = mutableListOf()
+            return true
+        }
+        return false
+    }
 
     /**
      * Убрать человека.
@@ -32,7 +40,14 @@ class PhoneBook {
      * и false, если человек с таким именем отсутствовал в телефонной книге
      * (во втором случае телефонная книга не должна меняться).
      */
-    fun removeHuman(name: String): Boolean = TODO()
+    fun removeHuman(name: String): Boolean {
+        return if (!bookOfPhones.containsKey(name)) {
+            false
+        } else {
+            bookOfPhones.remove(name)
+            true
+        }
+    }
 
     /**
      * Добавить номер телефона.
@@ -41,7 +56,12 @@ class PhoneBook {
      * либо у него уже был такой номер телефона,
      * либо такой номер телефона зарегистрирован за другим человеком.
      */
-    fun addPhone(name: String, phone: String): Boolean = TODO()
+    fun addPhone(name: String, phone: String): Boolean {
+        bookOfPhones.values.forEach { if (phone in it) return false }
+        if (!bookOfPhones.keys.contains(name)) return false
+        bookOfPhones[name]?.add(phone)
+        return true
+    }
 
     /**
      * Убрать номер телефона.
@@ -49,24 +69,39 @@ class PhoneBook {
      * и false, если человек с таким именем отсутствовал в телефонной книге
      * либо у него не было такого номера телефона.
      */
-    fun removePhone(name: String, phone: String): Boolean = TODO()
+    fun removePhone(name: String, phone: String): Boolean {
+        if (bookOfPhones.contains(phone)) return false
+        if (!bookOfPhones.keys.contains(name)) return false
+        bookOfPhones.remove(phone)
+        return true
+    }
 
     /**
      * Вернуть все номера телефона заданного человека.
      * Если этого человека нет в книге, вернуть пустой список
      */
-    fun phones(name: String): Set<String> = TODO()
+    fun phones(name: String): List<String> {
+        if (name in bookOfPhones.keys) {
+            return bookOfPhones[name]!!
+        }
+        return listOf()
+    }
 
     /**
      * Вернуть имя человека по заданному номеру телефона.
      * Если такого номера нет в книге, вернуть null.
      */
-    fun humanByPhone(phone: String): String? = TODO()
+    fun humanByPhone(phone: String): String? {
+        val map1 = bookOfPhones
+        bookOfPhones.values.forEach { entry -> entry }
+        return null
+    }
 
     /**
      * Две телефонные книги равны, если в них хранится одинаковый набор людей,
      * и каждому человеку соответствует одинаковый набор телефонов.
      * Порядок людей / порядок телефонов в книге не должен иметь значения.
      */
-    override fun equals(other: Any?): Boolean = TODO()
+    override fun equals(other: Any?): Boolean = PhoneBook() == other
+    override fun hashCode(): Int = bookOfPhones.hashCode()
 }
