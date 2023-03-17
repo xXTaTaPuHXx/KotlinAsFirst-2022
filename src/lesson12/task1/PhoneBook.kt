@@ -71,7 +71,7 @@ class PhoneBook {
      */
     fun removePhone(name: String, phone: String): Boolean {
         for ((key, value) in bookOfPhones) {
-            if (key == name && !value.contains(phone)) return false
+            if (key.contains(name) && !value.contains(phone)) return false
         }
         if (!bookOfPhones.keys.contains(name)) return false
         bookOfPhones.remove(phone)
