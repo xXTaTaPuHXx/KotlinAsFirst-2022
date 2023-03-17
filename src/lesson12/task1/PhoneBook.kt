@@ -18,7 +18,7 @@ package lesson12.task1
  * Класс должен иметь конструктор по умолчанию (без параметров).
  */
 class PhoneBook {
-    private var bookOfPhones = mutableMapOf<String, MutableList<String>>()
+    private var bookOfPhones = mutableMapOf<String, MutableSet<String>>()
 
     /**
      * Добавить человека.
@@ -28,7 +28,7 @@ class PhoneBook {
      */
     fun addHuman(name: String): Boolean {
         if (!bookOfPhones.containsKey(name)) {
-            bookOfPhones[name] = mutableListOf()
+            bookOfPhones[name] = mutableSetOf()
             return true
         }
         return false
@@ -80,11 +80,11 @@ class PhoneBook {
      * Вернуть все номера телефона заданного человека.
      * Если этого человека нет в книге, вернуть пустой список
      */
-    fun phones(name: String): List<String> {
+    fun phones(name: String): Set<String> {
         if (name in bookOfPhones.keys) {
             return bookOfPhones[name]!!
         }
-        return listOf()
+        return setOf()
     }
 
     /**
@@ -92,8 +92,10 @@ class PhoneBook {
      * Если такого номера нет в книге, вернуть null.
      */
     fun humanByPhone(phone: String): String? {
-        val map1 = bookOfPhones
-        bookOfPhones.values.forEach { entry -> entry }
+        for (i in bookOfPhones.keys.indices) {
+            val a1 = bookOfPhones.entries.find { it.value.contains(phone) }?.key
+            if (bookOfPhones.keys.contains(a1)) return a1
+        }
         return null
     }
 
@@ -102,6 +104,13 @@ class PhoneBook {
      * и каждому человеку соответствует одинаковый набор телефонов.
      * Порядок людей / порядок телефонов в книге не должен иметь значения.
      */
-    override fun equals(other: Any?): Boolean = PhoneBook() == other
+    override fun equals(other: Any?): Boolean {
+        return when {
+            other !is PhoneBook -> false
+            bookOfPhones.size != other.bookOfPhones.size -> false
+            else -> true
+        }
+    }
+
     override fun hashCode(): Int = bookOfPhones.hashCode()
 }
