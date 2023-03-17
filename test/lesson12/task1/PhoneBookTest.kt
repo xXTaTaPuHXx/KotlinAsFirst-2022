@@ -45,11 +45,15 @@ internal class PhoneBookTest {
         val book = PhoneBook()
         assertTrue(book.addHuman("Иванов Петр"))
         assertTrue(book.addHuman("Васильев Дмитрий"))
+        assertTrue(book.addHuman("Ахмед Вазгирович"))
         assertTrue(book.addPhone("Иванов Петр", "+79211234567"))
         assertTrue(book.addPhone("Иванов Петр", "+78121234567"))
         assertTrue(book.addPhone("Васильев Дмитрий", "+79217654321"))
+        assertTrue(book.addPhone("Ахмед Вазгирович", "12333"))
         assertTrue(book.removePhone("Иванов Петр", "+78121234567"))
         assertTrue(book.removePhone("Васильев Дмитрий", "+79217654321"))
+        assertFalse(book.removePhone("Ахмед Вазгирович", "+79181929393"))
+        assertFalse(book.removePhone("Ахмед Вазгирович", ""))
     }
 
     @Test
