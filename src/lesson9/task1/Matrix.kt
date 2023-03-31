@@ -2,6 +2,7 @@
 
 package lesson9.task1
 
+
 // Урок 9: проектирование классов
 // Максимальное количество баллов = 40 (без очень трудных задач = 15)
 
@@ -44,32 +45,53 @@ interface Matrix<E> {
  * height = высота, width = ширина, e = чем заполнить элементы.
  * Бросить исключение IllegalArgumentException, если height или width <= 0.
  */
-fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
+fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
+    val matrix = List(height) { List(width) { e } }
+    return MatrixImpl(matrix)
+}
 
 /**
  * Средняя сложность (считается двумя задачами в 3 балла каждая)
  *
  * Реализация интерфейса "матрица"
  */
-class MatrixImpl<E> : Matrix<E> {
-    override val height: Int = TODO()
+class MatrixImpl<E>(private val matrix: List<List<E>>) : Matrix<E> {
 
-    override val width: Int = TODO()
+    override val height: Int = matrix.size
 
-    override fun get(row: Int, column: Int): E = TODO()
+    override val width: Int = matrix[0].size
 
-    override fun get(cell: Cell): E = TODO()
+    override fun get(row: Int, column: Int): E = matrix[row][column]
+
+    override fun get(cell: Cell): E = get(cell.row, cell.column)
 
     override fun set(row: Int, column: Int, value: E) {
-        TODO()
     }
 
     override fun set(cell: Cell, value: E) {
-        TODO()
+        set(cell.row, cell.column, value)
     }
 
-    override fun equals(other: Any?) = TODO()
+    override fun equals(other: Any?) = other is MatrixImpl<*> && height == other.height && width == other.width
 
-    override fun toString(): String = TODO()
+    override fun toString(): String {
+        val newString = StringBuilder()
+        newString.append("[")
+        for (i in matrix.indices) {
+            newString.append("[")
+            for (j in matrix[i].indices) {
+                newString.append(matrix[i][j])
+            }
+            newString.append("]")
+        }
+        newString.append("]")
+        return newString.toString()
+    }
+
+    override fun hashCode(): Int {
+        var result = height
+        result = 31 * result + width
+        return result
+    }
 }
 

@@ -426,8 +426,8 @@ Basic, Ruby, Swift.
     @Test
     fun foo() {
         assertEquals(
-            listOf(1, 3, 3, 3), foo(
-                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName.txt", listOf(3, 1, 2, 1)
+            listOf(2, 1, 3, 1, 0, 2), foo(
+                "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName.txt", listOf(3, 1, 2, 1, 0, 1)
             )
         )
     }
@@ -437,7 +437,7 @@ Basic, Ruby, Swift.
         assertEquals(
             "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\outputName.txt", foo1(
                 "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName1.txt",
-                listOf("2 Второй акт", "5 Следущая часть", "7 Продолжение"),
+                listOf("2 Второй акт", "5 Следующая часть", "7 Продолжение"),
                 "C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\outputName.txt"
             )
         )
@@ -466,7 +466,13 @@ Basic, Ruby, Swift.
 
     @Test
     fun foo2() {
-
+        assertEquals(
+            mapOf(Pair(3, 30), Pair(2, 45)),
+            foo2(
+                ("C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName2.txt"),
+                90
+            )
+        )
     }
 
     @Test
@@ -499,9 +505,8 @@ Basic, Ruby, Swift.
 
     @Test
     fun trianglematrix() {
-        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
-        val b = listOf(listOf(1, 2, 3), listOf(5, 6), listOf(9))
-        assertEquals(b, trianglematrix(a))
+        val b = listOf(listOf(1, 0, 0), listOf(2, 3, 0), listOf(4, 5, 6))
+        assertEquals(b, trianglematrix(b))
     }
 
     @Test
@@ -529,5 +534,19 @@ Basic, Ruby, Swift.
         val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
         val b = 5.0
         assertEquals(b, averageDiagonal(a))
+    }
+
+    @Test
+    fun zadacha() {
+        val a = listOf(listOf(1, 2, 7), listOf(3, 5, 9), listOf(4, 8, 0))
+        assertEquals(16, zadacha(a))
+    }
+
+    @Test
+    fun zadachka() {
+        val a = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val b = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+        val c = listOf(listOf(2, 4, 6), listOf(8, 10, 12), listOf(14, 16, 18))
+        assertEquals(c, zadachka(a, b))
     }
 }

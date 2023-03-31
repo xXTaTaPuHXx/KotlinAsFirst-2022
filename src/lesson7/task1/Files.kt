@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import ru.spbstu.wheels.toMutableMap
 import java.io.File
 import java.io.FileWriter
 
@@ -147,7 +148,7 @@ fun centerFile(inputName: String, outputName: String) {
  * 6) Число пробелов между более левой парой соседних слов должно быть больше или равно числу пробелов
  *    между более правой парой соседних слов.
  *
- * Следует учесть, что входной файл может содержать последовательности из нескольких пробелов  между слвоами. Такие
+ * Следует учесть, что входной файл может содержать последовательности из нескольких пробелов между словами. Такие
  * последовательности следует учитывать при выравнивании и при необходимости избавляться от лишних пробелов.
  * Из этого следуют следующие правила:
  * 7) В самой длинной строке каждая пара соседних слов должна быть отделена В ТОЧНОСТИ одним пробелом
@@ -289,7 +290,7 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
 </body>
 </html>
  *
- * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
+ * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать необязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     TODO()
@@ -390,7 +391,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
 </body>
 </html>
 ///////////////////////////////конец файла//////////////////////////////////////////////////////////////////////////////
- * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
+ * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать необязательно)
  */
 fun markdownToHtmlLists(inputName: String, outputName: String) {
     TODO()
@@ -471,7 +472,7 @@ fun foo(InputName: String, registers: List<Int>): List<Int> {
         val file1 = k[i].replace(",", "").split(" ").toMutableList()
         val function = file1[0]
         file1.remove(function)
-        when {
+        if (file1[0].toIntOrNull() == null) when {
             (file1[0].replace("R", "").toInt() > registers.size) -> throw IllegalStateException()
             (file1[1].replace("R", "").toInt() > registers.size) -> throw IllegalStateException()
         }
@@ -527,37 +528,38 @@ fun foo1(InputName1: String, changes: List<String>, outputName: String): String 
 }
 
 // Вставить строку в файл
-fun foo2(InputName2: String, limit: Int): List<String> {
+fun foo2(InputName2: String, limit: Int): Map<String, Pair<Int, Int>> {
     val k = File("C:\\Users\\Alpha&Aidar\\IdeaProjects\\KotlinAsFirst-2022\\InputName2.txt").readLines()
-    val answer = mutableListOf<String>()
-    val list1 = mutableListOf<Int>()
-    val list2 = mutableListOf<Int>()
-    var line = 0
-    while (line != k.size) {
-        val a = k[line].split("--")
+    var i = 0
+    val bebra = mutableMapOf<String, Pair<Int, Int>>()
+    while (i != k.size) {
+        val a = k[i].split("--")
         val b = a[1].split(",")
+        val jobName = a[0].replace(" ", "")
         val priority = b[0].replace(" ", "")
         val time = b[1].replace(" ", "")
         val priorityInt = priority.replace("важность", "").toInt() // для сравнения важности
         val timeInt = time.replace("мин", "").toInt() // для сравнения времени
-        list1 += priorityInt
-        list2 += timeInt
-        line++
+        bebra[jobName] = Pair(priorityInt, timeInt)
+        i++
     }
-    while (limit > 0) {
-        list1.sortedDescending()
-        list2.sortedDescending()
-        for (i in list2.indices) {
-            val y = Pair(list1[i], list2[i])
-            limit - y.second
-            answer
+    val sortedMap = bebra.entries.sortedByDescending { it.value.first }.toMutableMap()
+    val sortedMap1 = bebra.values.sortedByDescending { it.first }
+    val answer = mutableListOf<Pair<Int, Int>>()
+    for (i in 1 until sortedMap1.size) {
+        if (sortedMap1[i - 1].second + sortedMap1[i].second != 90) {
+            answer.add(
+                Pair(
+                    sortedMap1[i - 1].first + sortedMap1[i].first,
+                    sortedMap1[i - 1].second + sortedMap1[i].second
+                )
+            )
         }
-        listOf("")
     }
-    return listOf()
+    return sortedMap
 }
 
-// недоделал
+// доделал легенда
 fun foo3(InputName3: String, src: String, dst: String): String {
     val file3 = File(InputName3).readLines()
     var i = 0
@@ -570,8 +572,7 @@ fun foo3(InputName3: String, src: String, dst: String): String {
         val dstSplited = dst.split(" ")
         val srcI = b.indexOf(srcSplited[1])
         val dstI = b.indexOf(dstSplited[1])
-        if (srcI != -1 && dstI != -1 && srcI < dstI)
-            return "$transport ${parts[1]}"
+        if (srcI != -1 && dstI != -1 && srcI < dstI) return "$transport ${parts[1]}"
         i++
     }
     return ""
@@ -606,13 +607,14 @@ fun foo4(InputName2: String, limit: Int): List<String> {
 fun matrixtask(matrix: List<List<Int>>): List<List<Int>> {
     val list = mutableListOf<Int>()
     val b = matrix[0].size
-    for (i in matrix.indices) {
-        if (matrix[i].size == b) continue
+    if (b == matrix.size) {
+        throw java.lang.IllegalArgumentException()
     }
     for (row in matrix) {
         for (element in row) {
+            if (list.contains(element)) throw java.lang.IllegalArgumentException()
             list.add(element)
-            if (list.toSet().size == list.size) return List(b) { col ->
+            if (list.toSet().size == matrix.size) return List(b) { col ->
                 List(matrix.size) { row ->
                     matrix[row][col]
                 }
@@ -645,20 +647,32 @@ fun sumMatrixRows(matrix: List<List<Int>>): List<Int> {
 }
 
 fun findMaxElement(matrix: List<List<Int>>): Int = matrix.flatten().max()
-fun averageMatrix(matrix: List<List<Int>>): List<List<Int>> {
-    TODO()
-}
 
 fun trianglematrix(matrix: List<List<Int>>): List<List<Int>> {
-    var sum = 0
-    for (i in matrix[0].indices) {
-        val maxIndexStr = matrix[i].maxOf { it }
-        val v = matrix[i].indexOf(maxIndexStr)
-        for (j in matrix.indices) {
-            val c = matrix[i][j]
-            sum += c
-            val b = 0
+    val a = matrix.size
+    val b = matrix[0].size
+    val answer = mutableListOf<Int>()
+    for (i in 1 until a) {
+        for (j in 0 until i) {
+            answer += matrix[i][j]
         }
+    }
+    if (answer.sumOf { it } == 0) return matrix
+    else {
+        while (answer.isNotEmpty()) {
+            answer.remove(answer[0])
+        }
+        var k = 1
+        for (i in 0 until a) {
+            for (j in k until b) {
+                answer += matrix[i][j]
+                if (k == b - 1) {
+                    break
+                }
+            }
+            k++
+        }
+        if (answer.sumOf { it } == 0) return matrix
     }
     return listOf()
 }
@@ -715,3 +729,52 @@ fun averageDiagonal(matrix: List<List<Int>>): Double {
     }
     return diagonal.sumOf { it }.toDouble() / diagonal.size
 }
+
+fun zadacha(matrix: List<List<Any>>): Int {
+    for (i in 1 until matrix.size) {
+        if (matrix[i - 1].size != matrix[i].size) throw java.lang.IllegalStateException()
+        for (j in matrix[i].indices) {
+            if (matrix[i][j] !is Int) throw java.lang.IllegalArgumentException()
+        }
+    }
+    val minsum = mutableListOf<Int>()
+    minsum.add(matrix[0][0] as Int)
+    var i = 0
+    var j = 0
+    while ((i != matrix.size - 1) || (j != matrix[0].size - 1)) {
+        if ((i == matrix.size - 1) || (j == matrix[0].size - 1)) {
+            when {
+                i == matrix.size - 1 -> {
+                    j++
+                    minsum.add(matrix[i][j] as Int)
+                }
+
+                j == matrix.size - 1 -> {
+                    i++
+                    minsum.add(matrix[i][j] as Int)
+                }
+            }
+        } else {
+            if (matrix[i + 1][j].toString().toInt() > matrix[i][j + 1].toString().toInt()) {
+                minsum.add(matrix[i][j + 1] as Int)
+                j++
+            } else {
+                minsum.add(matrix[i + 1][j] as Int)
+                i++
+            }
+        }
+    }
+    return minsum.sumOf { it }
+}
+
+fun zadachka(matrix: List<List<Int>>, matrix1: List<List<Int>>): List<List<Int>> {
+    val matrix2 = List(matrix.size) { List(matrix[0].size) { 0 }.toMutableList() }.toMutableList()
+    for (i in matrix.indices) {
+        for (j in matrix[0].indices) {
+            matrix2[i][j] += matrix[i][j] + matrix1[i][j]
+        }
+    }
+    return matrix2
+}
+
+fun foo6(): String = TODO()
